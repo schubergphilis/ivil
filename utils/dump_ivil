@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+# ------------------------------------------------------------------------------
+# $Id: dump_ivil,v 1.1 2010/11/14 23:14:14 frank_breedijk Exp $
+# ------------------------------------------------------------------------------
+# This program loads an IVIL file with XML::Simple and dumps the data with
+# Data::Dumper
+# ------------------------------------------------------------------------------
+# Copyright (C) 2010  Schuberg Philis, Frank Breedijk - Under GPLv3
+# ------------------------------------------------------------------------------
+
+use strict;
+use XML::Simple;
+use Data::Dumper;
+
+print Dumper( 
+	XMLin(
+		(join "", <>),
+		forcearray 	=> [ 'finding', 'references' ],
+		KeyAttr		=> undef,
+	) 
+);
