@@ -45,7 +45,6 @@ my $IVIL_VERSION = "0.2";
 		ivil_close
 		get_refs
 		ivil_findings
-		load_ivil
 	);
 
 use strict;
