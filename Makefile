@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 #
 
-all : perl-lib
+all : perl-lib utils
 
 perl-lib : IVIL.pm.tgz
 
@@ -32,7 +32,7 @@ utils : nbe2ivil dump_ivil
 
 nbe2ivil : nbe2ivil.tgz
 
-nbe2ivil.tgz : perl-lib utils/nbe2ivil
+nbe2ivil.tgz : utils/nbe2ivil perl-module/IVIL.pm
 	cd perl-module; tar -cvf ../nbe2ivil.tar IVIL.pm
 	cd utils; tar -rvf ../nbe2ivil.tar nbe2ivil
 	gzip -9 nbe2ivil.tar
@@ -40,7 +40,7 @@ nbe2ivil.tgz : perl-lib utils/nbe2ivil
 
 dump_ivil : dump_ivil.tgz
 
-dump_ivil.tgz :
+dump_ivil.tg : utils/dump_ivil perl-module/IVIL.pm
 	cd perl-module; tar -cvf ../dump_ivil.tar IVIL.pm
 	cd utils; tar -rvf ../dump_ivil.tar dump_ivil
 	gzip -9 dump_ivil.tar
