@@ -217,9 +217,7 @@ foreach my $host ( @{$nessus->{Report}->{ReportHost}} ) {
 	}
 }
 
-print OUT "<findings>\n";
-#print Dumper($nessus);
-exit;
+print OUT "</findings>\n";
 
 print "Creating sender block\n" if $verbose;
 print OUT ivil_sender($scanner, $scannerversion, $timestamp);
