@@ -45,6 +45,7 @@ my $IVIL_VERSION = "0.2";
 		ivil_close
 		get_refs
 		ivil_findings
+		ivil_finding
 	);
 
 use strict;
@@ -60,6 +61,7 @@ sub ivil_sender($$$);
 sub ivil_close();
 sub get_refs($);
 sub ivil_findings($);
+sub ivil_finding($);
 sub load_ivil($;$$$$$);
 
 =head1 IVIL - Functions to read and write IVIL
@@ -363,30 +365,62 @@ sub ivil_findings($) {
 	my $block = "\t<findings>\n";
 	
 	foreach my $finding ( @$findings ) {
-		$block .= "\t\t<finding>\n";
-		$block .= "\t\t\t<ip>$finding->{ip}<\/ip>\n";
-		$block .= "\t\t\t<port>$finding->{port}<\/port>\n";
-		$block .= "\t\t\t<id>$finding->{id}<\/id>\n";
-		$block .= "\t\t\t<severity>$finding->{severity}<\/severity>\n";
-		$block .= "\t\t\t<finding_txt>";
-		$block .= encode_entities($finding->{finding});
-		$block .= "<\/finding_txt>\n";
-		if ( $finding->{references} ) {
-			$block .= "\t\t\t<references>\n";
-			foreach my $reftype ( sort keys %{$finding->{references}} ) {
-				foreach my $ref ( @{$finding->{references}->{$reftype}} ) {
-					$block .= "\t\t\t\t<$reftype>$ref<\/$reftype>\n"
-				}
-			}
-			$block .= "\t\t\t<\/references>\n";
-		}
-		$block .= "\t\t<\/finding>\n";
+		$block .= ivil_finding($finding);
 	}
 		
 	$block .= "\t</findings>\n";
 
 	return $block;
 }
+
+=head2 ivil_finding
+
+This function returns the XML block for finding provided to it in a hashref
+
+=over 2
+
+=item Parameters
+
+=over 4
+
+=item finding - reference to a hash containing a finding
+
+=back
+
+=item Checks
+
+None
+
+=back
+
+=cut
+
+sub ivil_finding($) {
+	my $finding = shift;
+	my $block = "";
+	
+	$block .= "\t\t<finding>\n";
+	$block .= "\t\t\t<ip>$finding->{ip}<\/ip>\n";
+	$block .= "\t\t\t<port>$finding->{port}<\/port>\n";
+	$block .= "\t\t\t<id>$finding->{id}<\/id>\n";
+	$block .= "\t\t\t<severity>$finding->{severity}<\/severity>\n";
+	$block .= "\t\t\t<finding_txt>";
+	$block .= encode_entities($finding->{finding});
+	$block .= "<\/finding_txt>\n";
+	if ( $finding->{references} ) {
+		$block .= "\t\t\t<references>\n";
+		foreach my $reftype ( sort keys %{$finding->{references}} ) {
+			foreach my $ref ( @{$finding->{references}->{$reftype}} ) {
+				$block .= "\t\t\t\t<$reftype>$ref<\/$reftype>\n"
+			}
+		}
+		$block .= "\t\t\t<\/references>\n";
+	}
+	$block .= "\t\t<\/finding>\n";
+
+	return $block;
+}
+
 
 # Close the PM file.
 return 1;
