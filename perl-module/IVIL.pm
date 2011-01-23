@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # $Id$
 # ------------------------------------------------------------------------------
-# IVIL perl module. This is where most of the real logic is
+# IVIL perl module. This is where most of the real logic is 
 # This modules is based on the IVIL standard version v0.2
 # ------------------------------------------------------------------------------
 # Copyright (C) 2010  Schuberg Philis, Frank Breedijk - Under the MIT license
