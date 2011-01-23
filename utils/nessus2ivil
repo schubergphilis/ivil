@@ -144,7 +144,11 @@ foreach my $host ( @{$nessus->{Report}->{ReportHost}} ) {
 			} elsif ( $key eq 'cve' ) {
 			} elsif ( $key eq 'bid' ) {
 			} elsif ( $key eq 'severity' ) {
-				$finding->{severity} = $item->{severity};
+				if ( $item->{severity} > 0 ) {
+					$finding->{severity} = 4 - $item->{severity};
+				} else {
+					$finding->{severity} = $item->{severity};
+				}
 			} elsif ( $key eq 'plugin_publication_date' ) {
 			} elsif ( $key eq 'plugin_modification_date' ) {
 			} elsif ( $key eq 'plugin_version' ) {
@@ -219,8 +223,8 @@ foreach my $host ( @{$nessus->{Report}->{ReportHost}} ) {
 
 print OUT "</findings>\n";
 
-print "Creating sender block\n" if $verbose;
-print OUT ivil_sender($scanner, $scannerversion, $timestamp);
+#print "Creating sender block\n" if $verbose;
+#print OUT ivil_sender($scanner, $scannerversion, $timestamp);
 
 
 print OUT ivil_close();
