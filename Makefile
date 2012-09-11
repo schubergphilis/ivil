@@ -35,7 +35,7 @@ IVIL.pm.tgz : perl-module/IVIL.pm
 	gzip -9 IVIL.pm.tar
 	mv IVIL.pm.tar.gz IVIL.pm.tgz
 
-utils : nbe2ivil nessus2ivil dump_ivil dump_nessus
+utils : nbe2ivil nessus2ivil dump_ivil
 
 nbe2ivil : nbe2ivil.tgz
 
@@ -60,14 +60,9 @@ dump_ivil : dump_ivil.tgz
 dump_ivil.tgz : utils/dump_ivil 
 	cd utils; tar -cvf ../dump_ivil.tgz dump_ivil
 
-dump_nessus : dump_nessus.tgz
-
-dump_nessus.tgz : utils/dump_nessus 
-	cd utils; tar -cvf ../dump_nessus.tgz dump_nessus
-
 ivil.tgz : utils/nessus2ivil perl-module/IVIL.pm
 	cd perl-module; tar -cvf ../ivil.tar IVIL.pm
-	cd utils; tar -rvf ../ivil.tar nbe2ivil nessus2ivil dump_ivil dump_nessus
+	cd utils; tar -rvf ../ivil.tar nbe2ivil nessus2ivil dump_ivil
 	tar -rvf ivil.tar MIT_license.txt
 	gzip -9 ivil.tar
 	mv ivil.tar.gz ivil.tgz
